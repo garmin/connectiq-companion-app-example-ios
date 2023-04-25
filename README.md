@@ -65,5 +65,4 @@ Please be sure to refer to the <a href="https://forums.garmin.com/developer/conn
 [Connect IQ SDK for iOS]: https://github.com/garmin/connectiq-companion-app-sdk-ios
 [CommWatch.prg]: https://github.com/garmin/connectiq-companion-app-example-ios/blob/master/CommWatch.prg
 [License]: https://github.com/garmin/connectiq-companion-app-example-ios/blob/master/LICENSE.md
-[License Agreement]: https://github.com/garmin/connectiq-companion-app-sdk-ios/blob/main/License.pdf
 [documentation]: https://github.com/garmin/connectiq-companion-app-sdk-ios/tree/main/documentation
