@@ -60,11 +60,8 @@ NSString * const kDevicesFileName = @"devices";
 #pragma mark - METHODS
 // --------------------------------------------------------------------------------
 
-- (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication {
-    if (([url.scheme isEqualToString:ReturnURLScheme] &&
-         [sourceApplication isEqualToString:IQGCMBundle]) ||
-         ([url.scheme isEqualToString:ReturnURLScheme] &&
-          [sourceApplication isEqualToString:IQGCMInternalBetaBundle])) {
+- (BOOL)handleOpenURL:(NSURL *)url {
+    if ([url.scheme isEqualToString:ReturnURLScheme]) {
         NSArray *devices = [[ConnectIQ sharedInstance] parseDeviceSelectionResponseFromURL:url];
         if (devices != nil) {
             NSLog(@"Forgetting %d known devices.", (int)self.devices.count);

@@ -21,7 +21,7 @@
 - (instancetype)init NS_UNAVAILABLE;
 + (DeviceManager *)sharedManager;
 
-- (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication;
+- (BOOL)handleOpenURL:(NSURL *)url;
 
 - (NSArray *)allDevices;
 
