@@ -60,7 +60,7 @@
     NSString* sourceApp = options[UIApplicationOpenURLOptionsSourceApplicationKey];
     NSLog(@"Received URL from '%@': %@", sourceApp, url);
 
-    return [[DeviceManager sharedManager] handleOpenURL:url sourceApplication:sourceApp];
+    return [[DeviceManager sharedManager] handleOpenURL:url];
 }
 
 - (void)needsToInstallConnectMobile {
