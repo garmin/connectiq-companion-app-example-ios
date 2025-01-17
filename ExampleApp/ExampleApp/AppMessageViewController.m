@@ -194,7 +194,7 @@ static const int kMaxLogMessages = 200;
         LogMessage(@"%02.2f%% - %u/%u", percent, sentBytes, totalBytes);
     } completion:^(IQSendMessageResult result) {
         LogMessage(@"Send message finished with result %@", NSStringFromSendMessageResult(result));
-    }];
+    } isTransient:(false)];
 }
 
 - (void)logMessage:(NSString *)message {

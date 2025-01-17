@@ -22,7 +22,10 @@
     // Mobile is not installed, pass an instance of IQUIOverrideDelegate to this
     // method(such as self in this example). You can then bypass the alert dialog
     // or provide your own.
-    [[ConnectIQ sharedInstance] initializeWithUrlScheme:ReturnURLScheme uiOverrideDelegate:nil];
+    // Using URL Scheme
+    //[[ConnectIQ sharedInstance] initializeWithUrlScheme:ReturnURLScheme uiOverrideDelegate:nil];
+    // Using Universal links
+    [[ConnectIQ sharedInstance] initializeWithUniversalLinks:ReturnURLHost uiOverrideDelegate:nil];
     [[DeviceManager sharedManager] restoreDevicesFromFileSystem];
 
     // Override point for customization after application launch.
@@ -57,10 +60,19 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    // Handle Garmin Connect app attempting to launch this companion app using URL scheme
     NSString* sourceApp = options[UIApplicationOpenURLOptionsSourceApplicationKey];
     NSLog(@"Received URL from '%@': %@", sourceApp, url);
 
     return [[DeviceManager sharedManager] handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+    // Handle Garmin Connect app attempting to launch this companion app using universal link
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        return [[DeviceManager sharedManager] handleOpenURL:userActivity.webpageURL];
+    }
+    return NO;
 }
 
 - (void)needsToInstallConnectMobile {
