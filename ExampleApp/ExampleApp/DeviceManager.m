@@ -61,7 +61,7 @@ NSString * const kDevicesFileName = @"devices";
 // --------------------------------------------------------------------------------
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    if ([url.scheme isEqualToString:ReturnURLScheme]) {
+    if ([url.scheme isEqualToString:ReturnURLScheme] || [url.scheme isEqualToString:@"https"]) {
         NSArray *devices = [[ConnectIQ sharedInstance] parseDeviceSelectionResponseFromURL:url];
         if (devices != nil) {
             NSLog(@"Forgetting %d known devices.", (int)self.devices.count);

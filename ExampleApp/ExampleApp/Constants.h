@@ -8,3 +8,4 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const ReturnURLScheme;
+extern NSString * const ReturnURLHost;
