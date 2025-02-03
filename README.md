@@ -62,7 +62,7 @@ Please be sure to refer to the <a href="https://forums.garmin.com/developer/conn
 [Third-Party Tutorials and Open Source Apps]: https://forums.garmin.com/developer/connect-iq/f/discussion/7961/overview-of-connect-iq-apps-accompanied-with-source-code
 
 [Connect IQ SDK for iOS]: https://github.com/garmin/connectiq-companion-app-sdk-ios
-[Connect IQ SDK for devices]: https://developer.garmin.com/connect-iq/sdk/
+[ConnecIQ SDK for devices]: https://developer.garmin.com/connect-iq/sdk/
 [Your first app]: https://developer.garmin.com/connect-iq/connect-iq-basics/your-first-app/
 [License]: https://github.com/garmin/connectiq-companion-app-example-ios/blob/master/LICENSE.md
 [documentation]: https://github.com/garmin/connectiq-companion-app-sdk-ios/tree/main/documentation
