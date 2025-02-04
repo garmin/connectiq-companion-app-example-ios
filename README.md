@@ -16,10 +16,9 @@ Example [License].
 - Run on phone.
 
 #### Comm Watch Sample
-- The Comm Watch application is a sample application for ConnectIQ
-- Compile using Visual Studio Code https://developer.garmin.com/connect-iq/reference-guides/visual-studio-code-extension/
-- Generate PRG file or use [CommWatch.prg] (the already compiled app)
-- Copy PRG file to the watch
+- The Comm Watch application is a sample application for ConnectIQ to be used with above mentioned Example App
+- Get the app and the code for it by downloading the [ConnecIQ SDK for devices].
+- The Comm Watch application is available in the "samples" folder of the [ConnecIQ SDK for devices] and the instructions for installing the app are available at [Your first app]'s "Importing an Example" section
 
 ## Other Useful Info
 
@@ -63,6 +62,7 @@ Please be sure to refer to the <a href="https://forums.garmin.com/developer/conn
 [Third-Party Tutorials and Open Source Apps]: https://forums.garmin.com/developer/connect-iq/f/discussion/7961/overview-of-connect-iq-apps-accompanied-with-source-code
 
 [Connect IQ SDK for iOS]: https://github.com/garmin/connectiq-companion-app-sdk-ios
-[CommWatch.prg]: https://github.com/garmin/connectiq-companion-app-example-ios/blob/master/CommWatch.prg
+[ConnecIQ SDK for devices]: https://developer.garmin.com/connect-iq/sdk/
+[Your first app]: https://developer.garmin.com/connect-iq/connect-iq-basics/your-first-app/
 [License]: https://github.com/garmin/connectiq-companion-app-example-ios/blob/master/LICENSE.md
 [documentation]: https://github.com/garmin/connectiq-companion-app-sdk-ios/tree/main/documentation
