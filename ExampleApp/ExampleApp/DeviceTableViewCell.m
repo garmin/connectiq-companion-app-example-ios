@@ -48,6 +48,7 @@
     self.nameLabel.enabled = enabled;
     self.modelLabel.enabled = enabled;
     self.statusLabel.enabled = enabled;
+    self.partNumber.enabled = enabled;
 }
 
 // --------------------------------------------------------------------------------
