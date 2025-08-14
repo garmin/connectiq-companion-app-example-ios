@@ -103,6 +103,7 @@
     DeviceTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"iqdevicecell" forIndexPath:indexPath];
     cell.nameLabel.text = device.friendlyName;
     cell.modelLabel.text = device.modelName;
+    cell.partNumber.text = device.partNumber;
     switch (status) {
         case IQDeviceStatus_InvalidDevice:
             cell.statusLabel.text = @"Invalid Device";

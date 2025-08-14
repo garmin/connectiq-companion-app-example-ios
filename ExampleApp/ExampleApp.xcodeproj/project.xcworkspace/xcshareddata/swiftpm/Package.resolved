@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/garmin/connectiq-companion-app-sdk-ios",
       "state" : {
-        "revision" : "3312f9f50e3103e54c2c9b09b823f40a16e0c6cb",
-        "version" : "1.6.0"
+        "revision" : "00594907c84884a9430c6a33825940c2769f261a",
+        "version" : "1.7.0"
       }
     }
   ],

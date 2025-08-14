@@ -12,6 +12,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *nameLabel;
 @property (nonatomic, strong) IBOutlet UILabel *modelLabel;
 @property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UILabel *partNumber;
 @property (nonatomic) BOOL enabled;
 
 @end

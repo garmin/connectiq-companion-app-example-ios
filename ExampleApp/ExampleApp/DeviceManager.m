@@ -68,7 +68,8 @@ NSString * const kDevicesFileName = @"devices";
             [self.devices removeAllObjects];
 
             for (IQDevice *device in devices) {
-                NSLog(@"Received device: [%@, %@, %@]", device.uuid, device.modelName, device.friendlyName);
+                NSLog(@"Received device: [%@, %@, %@, %@]", device.uuid, device.modelName, device.friendlyName,
+                      device.partNumber);
                 self.devices[device.uuid] = device;
             }
             [self saveDevicesToFileSystem];
