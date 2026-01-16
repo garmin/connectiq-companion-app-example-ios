@@ -68,8 +68,7 @@ NSString * const kDevicesFileName = @"devices";
             [self.devices removeAllObjects];
 
             for (IQDevice *device in devices) {
-                NSLog(@"Received device: [%@, %@, %@, %@]", device.uuid, device.modelName, device.friendlyName,
-                      device.partNumber);
+                NSLog(@"Received device: [%@, %@, %@, %@]", device.uuid, device.modelName, device.friendlyName, device.partNumber);
                 self.devices[device.uuid] = device;
             }
             [self saveDevicesToFileSystem];
@@ -86,15 +85,40 @@ NSString * const kDevicesFileName = @"devices";
 
 - (void)saveDevicesToFileSystem {
     NSLog(@"Saving known devices.");
-    NSData* archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.devices requiringSecureCoding:NO error:nil];
+    NSError *archiveError = nil;
+    NSData* archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.devices
+                                                 requiringSecureCoding:YES
+                                                                 error:&archiveError];
+    if (!archivedData) {
+        NSLog(@"Archiving failed: %@", archiveError.localizedDescription);
+        return;
+    }
     if (![archivedData writeToFile:self.devicesFilePath atomically:YES]) {
         NSLog(@"Failed to save devices file.");
     }
 }
 
 - (void)restoreDevicesFromFileSystem {
+    NSError *unarchiveError = nil;
+    NSSet *allowedClasses = [NSSet setWithObjects:[NSMutableDictionary class],
+                             [IQDevice class],
+                             [NSString class],
+                             [NSUUID class],
+                             nil];
     NSData *unarchivedData = [NSData dataWithContentsOfFile:self.devicesFilePath];
-    NSMutableDictionary *restoredDevices = [NSKeyedUnarchiver unarchivedObjectOfClass:NSMutableDictionary.class fromData:unarchivedData error:nil];
+    NSMutableDictionary *restoredDevices = [NSKeyedUnarchiver unarchivedObjectOfClasses:allowedClasses
+                                                                               fromData:unarchivedData
+                                                                                  error:&unarchiveError];
+    if (unarchiveError) {
+        NSLog(@"Error unarchiving: %@", unarchiveError.localizedDescription);
+        return;
+    }
+
+    if (![restoredDevices isKindOfClass:[NSMutableDictionary class]]) {
+        NSLog(@"Unarchived object was of an unexpected type.");
+        return;
+    }
+
     if (nil != restoredDevices && restoredDevices.count > 0) {
         NSLog(@"Restored saved devices:");
         for (IQDevice *device in restoredDevices.allValues) {
