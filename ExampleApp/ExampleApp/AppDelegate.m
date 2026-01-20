@@ -18,14 +18,24 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    if( [launchOptions valueForKey:UIApplicationLaunchOptionsBluetoothPeripheralsKey] ) {
+        NSLog(@"Found CBCentralManager restoration key");
+    }
+
     // To bypass the default alert dialog shown by the SDK when Garmin Connect
     // Mobile is not installed, pass an instance of IQUIOverrideDelegate to this
     // method(such as self in this example). You can then bypass the alert dialog
     // or provide your own.
     // Using URL Scheme
-    //[[ConnectIQ sharedInstance] initializeWithUrlScheme:ReturnURLScheme uiOverrideDelegate:nil];
+    [[ConnectIQ sharedInstance] initializeWithUrlScheme:ReturnURLScheme
+                                     uiOverrideDelegate:nil
+                             stateRestorationIdentifier:@"CIQExampleApp"];
+
     // Using Universal links
-    [[ConnectIQ sharedInstance] initializeWithUniversalLinks:ReturnURLHost uiOverrideDelegate:nil];
+    //[[ConnectIQ sharedInstance] initializeWithUniversalLinks:ReturnURLHost
+    //                                      uiOverrideDelegate:nil
+    //                              stateRestorationIdentifier:nil];
+
     [[DeviceManager sharedManager] restoreDevicesFromFileSystem];
 
     // Override point for customization after application launch.

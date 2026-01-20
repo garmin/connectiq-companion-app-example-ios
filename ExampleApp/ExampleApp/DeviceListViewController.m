@@ -25,6 +25,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *button;
 
 @property (nonatomic, strong) DeviceManager *deviceManager;
+@property (nonatomic, readwrite) NSMutableDictionary *characteristicsDiscoveredStatuses;
 
 @end
 
@@ -58,10 +59,17 @@
 
     self.deviceManager = [DeviceManager sharedManager];
     self.deviceManager.delegate = self;
+    self.characteristicsDiscoveredStatuses = [NSMutableDictionary dictionary];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     for (IQDevice *device in [self.deviceManager allDevices]) {
+        IQDeviceStatus status = [[ConnectIQ sharedInstance] getDeviceStatus:device];
+        if (status == IQDeviceStatus_Connected) {
+            self.characteristicsDiscoveredStatuses[device.uuid] = @(TRUE);
+        } else {
+            self.characteristicsDiscoveredStatuses[device.uuid] = @(FALSE);
+        }
         NSLog(@"Registering for device events from '%@'", device.friendlyName);
         [[ConnectIQ sharedInstance] registerForDeviceEvents:device delegate:self];
     }
@@ -69,6 +77,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    [self.characteristicsDiscoveredStatuses removeAllObjects];
     [[ConnectIQ sharedInstance] unregisterForAllDeviceEvents:self];
 }
 
@@ -107,26 +116,35 @@
     switch (status) {
         case IQDeviceStatus_InvalidDevice:
             cell.statusLabel.text = @"Invalid Device";
+            cell.statusLabel.textColor = UIColor.redColor;
             cell.enabled = NO;
             break;
 
         case IQDeviceStatus_BluetoothNotReady:
             cell.statusLabel.text = @"Bluetooth Off";
+            cell.statusLabel.textColor = UIColor.redColor;
             cell.enabled = NO;
             break;
 
         case IQDeviceStatus_NotFound:
             cell.statusLabel.text = @"Not Found";
+            cell.statusLabel.textColor = UIColor.redColor;
             cell.enabled = NO;
             break;
 
         case IQDeviceStatus_NotConnected:
             cell.statusLabel.text = @"Not Connected";
+            cell.statusLabel.textColor = UIColor.blackColor;
             cell.enabled = NO;
             break;
 
         case IQDeviceStatus_Connected:
             cell.statusLabel.text = @"Connected";
+            if (self.characteristicsDiscoveredStatuses[device.uuid]) {
+                cell.statusLabel.textColor = UIColor.greenColor;
+            } else {
+                cell.statusLabel.textColor = UIColor.grayColor;
+            }
             cell.enabled = YES;
             break;
     }
@@ -148,6 +166,12 @@
 
 - (void)devicesChanged {
     for (IQDevice *device in [self.deviceManager allDevices]) {
+        IQDeviceStatus status = [[ConnectIQ sharedInstance] getDeviceStatus:device];
+        if (status == IQDeviceStatus_Connected) {
+            self.characteristicsDiscoveredStatuses[device.uuid] = @(TRUE);
+        } else {
+            self.characteristicsDiscoveredStatuses[device.uuid] = @(FALSE);
+        }
         [[ConnectIQ sharedInstance] registerForDeviceEvents:device delegate:self];
     }
     [self.tableView reloadData];
@@ -158,6 +182,12 @@
 // --------------------------------------------------------------------------------
 
 - (void)deviceStatusChanged:(IQDevice *)device status:(IQDeviceStatus)status {
+    self.characteristicsDiscoveredStatuses[device.uuid] = @(FALSE);
+    [self.tableView reloadData];
+}
+
+- (void)deviceCharacteristicsDiscovered:(IQDevice *)device {
+    self.characteristicsDiscoveredStatuses[device.uuid] = @(TRUE);
     [self.tableView reloadData];
 }
 
